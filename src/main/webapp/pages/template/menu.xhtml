@@ -12,10 +12,21 @@
 	<body>
 	<h:form>
 		<rich:panel header="Gestão de Projetos" >
-			
-			<h:commandButton value="Projetos" action="./projetoList.xhtml" styleClass="ui-button-info" icon="pi pi-sitemap"/>
-			<h:commandButton value="Tarefas" action="./tarefaList.xhtml" styleClass="ui-button-info" icon="pi pi-chart-bar"/>			
-
+			<rich:panelMenu id="first" mode="ajax" topGroupExpandedRightIcon="chevronUp"
+				topGroupCollapsedRightIcon="chevronDown" groupExpandedLeftIcon="disc"
+				groupCollapsedLeftIcon="disc">
+				<rich:panelMenuGroup id="projeto" label="Projeto" action="#{projetoController.listaProjeto}"/>
+				<rich:panelMenuGroup id="tarefa" label="Tarefa" action="./tarefaList.xhtml" />
+				<rich:panelMenuItem id="sair" label="Sair" />
+			</rich:panelMenu>
+		
+		</rich:panel>
+		
+		<rich:panel header="Gestão de Projetos" >
+			<h:panelGrid columns="1" columnClasses="cols" width="100%">
+				<h:commandButton value="Projetos" action="./projetoList.xhtml"/>
+				<h:commandButton value="Tarefas" action="./tarefaList.xhtml"/>			
+			</h:panelGrid>
 		</rich:panel>
 	</h:form>	
 	</body>

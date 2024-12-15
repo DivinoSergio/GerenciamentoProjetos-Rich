@@ -3,52 +3,93 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
 
 <ui:composition template="/pages/template/template.xhtml">
 	<ui:define name="body">
 		<p:growl id="growl" showDetail="true" life="5000" />
-	
-	<p:panel header="Projetos">
-		
-		<h:form id="formList">
-		<p:panelGrid columns="1" title="Tarefa">
-			<p:commandButton value="Novo Cadastro" action="projetoSave?faces-redirect=true" 
-				styleClass="ui-button-raised ui-button-success" icon="pi pi-sitemap"/>
 
-			<p:dataTable id="tableList" value="#{projetoController1.todosProjetos}" var="dataTableItem" 
-				rowKey="#{dataTableItem.id}" rows="5" paginator="true" paginatorPosition="bottom" 
-				selection="#{projetoController1.projetoId}" selectionMode="single">
-	
-				<p:column headerText="ID">
-					<h:outputText value="#{dataTableItem.id}" />
-				</p:column>
-				<p:column headerText="Título">
-					<h:outputText value="#{dataTableItem.titulo}" />
-				</p:column>
-				<p:column headerText="Descrição">
-					<h:outputText value="#{dataTableItem.descricao}" />
-				</p:column>
-				<p:column headerText="Data Inicio">
-					<h:outputText value="#{dataTableItem.dataInicio}" >
-						<f:convertDateTime pattern="dd/MM/yyyy" />
-					</h:outputText>
-				</p:column>
-				<p:column headerText="Ação">
-					<p:commandButton action="#{projetoController1.editarProjeto}"
-						icon="pi pi-pencil" styleClass="rounded-button ui-button-flat" update="formList">
-					<f:setPropertyActionListener value="#{dataTableItem}" target="#{projetoController1.projetoId}" />
-                </p:commandButton>
-						
-					<p:commandButton action="#{projetoController1.removeProjetoById(dataTableItem.id)}"
-						icon="pi pi-trash" styleClass="rounded-button ui-button-danger ui-button-flat" update="formList growl"/>
-					
-				</p:column>
-			</p:dataTable>
-		</p:panelGrid>
+			<h:form id="formList">
+				<rich:extendedDataTable id="edt" value="#{projetoController1.todosProjetos}" var="dataTableItem"
+					width="500px" height="500px">
+
+					<rich:column id="id" width="50" label="Id" sortable="true" sortBy="#{edt.id}">
+						<f:facet name="header">
+							<h:outputText value="Id" />
+						</f:facet>
+						<h:outputText value="#{edt.id}" />
+					</rich:column>
+					<rich:column id="titulo" width="300" label="Título">
+						<f:facet name="header">
+							<h:outputText value="Título" />
+						</f:facet>
+						<h:outputText value="#{edt.titulo}" />
+					</rich:column>
+					<rich:column id="descrcao" width="300">
+						<f:facet name="header">
+							<h:outputText value="Descrição" />
+						</f:facet>
+						<h:outputText value="#{edt.descricao}" />
+					</rich:column>
+					<rich:column id="date" width="100" >
+						<f:facet name="header">
+							<h:outputText value="Data Inicio" />
+						</f:facet>
+						<h:outputText value="#{edt.dataInicio}">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+						</h:outputText>
+					</rich:column>
+				</rich:extendedDataTable>
+
+			<p:panel header="Projetos">
+				<p:panelGrid columns="1" title="Tarefa">
+					<p:commandButton value="Novo Cadastro"
+						action="projetoSave?faces-redirect=true"
+						styleClass="ui-button-raised ui-button-success"
+						icon="pi pi-sitemap" />
+
+					<p:dataTable id="tableList"
+						value="#{projetoController1.todosProjetos}" var="dataTableItem"
+						rowKey="#{dataTableItem.id}" rows="5" paginator="true"
+						paginatorPosition="bottom"
+						selection="#{projetoController1.projetoId}" selectionMode="single">
+
+						<p:column headerText="ID">
+							<h:outputText value="#{dataTableItem.id}" />
+						</p:column>
+						<p:column headerText="Título">
+							<h:outputText value="#{dataTableItem.titulo}" />
+						</p:column>
+						<p:column headerText="Descrição">
+							<h:outputText value="#{dataTableItem.descricao}" />
+						</p:column>
+						<p:column headerText="Data Inicio">
+							<h:outputText value="#{dataTableItem.dataInicio}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Ação">
+							<p:commandButton action="#{projetoController1.editarProjeto}"
+								icon="pi pi-pencil" styleClass="rounded-button ui-button-flat"
+								update="formList">
+								<f:setPropertyActionListener value="#{dataTableItem}"
+									target="#{projetoController1.projetoId}" />
+							</p:commandButton>
+
+							<p:commandButton
+								action="#{projetoController1.removeProjetoById(dataTableItem.id)}"
+								icon="pi pi-trash"
+								styleClass="rounded-button ui-button-danger ui-button-flat"
+								update="formList growl" />
+
+						</p:column>
+					</p:dataTable>
+				</p:panelGrid>
+			</p:panel>
 		</h:form>
-	</p:panel>	
 	</ui:define>
 </ui:composition>
 
-</html>	
+</html>

@@ -58,6 +58,12 @@ public class ProjetoController {
         return "/pages/projetoEdit?faces-redirect=true";
     }
 
+
+    public String listaProjeto() {
+    	System.out.println("projeto");
+        return "/pages/projetoList?faces-redirect=true";
+    }
+    
     public void removeProjetoById(int id) {
     	System.out.println("Valor " + id);
     	
